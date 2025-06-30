@@ -1,8 +1,8 @@
 # 🔎 Sensitive Info Scanner
 
-![GitHub release](https://img.shields.io/github/v/release/seu-usuario/sensitive-info-scanner)
-![GitHub](https://img.shields.io/github/license/seu-usuario/sensitive-info-scanner)
-![GitHub language count](https://img.shields.io/github/languages/count/seu-usuario/sensitive-info-scanner)
+![GitHub release](https://img.shields.io/github/v/release/felipewatter/sensitive-info-scanner)
+![GitHub](https://img.shields.io/github/license/felipewatter/sensitive-info-scanner)
+![GitHub language count](https://img.shields.io/github/languages/count/felipewatter/sensitive-info-scanner)
 
 A simple and extensible CLI tool to detect sensitive information in your projects before publishing to public repositories.
 
