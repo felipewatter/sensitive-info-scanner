@@ -12,7 +12,7 @@ export const defaultPatterns: Pattern[] = [
   {id: 'private-key-block', severity: 'critical', regex: /-----BEGIN (?:[A-Z0-9 ]+ )?PRIVATE KEY-----/},
   {id: 'generic-secret-assignment', severity: 'medium', regex: /\b(?:api[_-]?key|secret|client[_-]?secret|access[_-]?token|password|passwd)\b\s*[:=]\s*['"]?[A-Za-z0-9_+/.=-]{20,160}/i},
 ];
-const sensitiveBasenames = /^(?:\.env(?:\.[A-Za-z0-9_-]+)?|id_(?:rsa|dsa|ecdsa|ed25519)|credentials\.json|service-account(?:\.json)?|[A-Za-z0-9_.-]+\.(?:p12|pfx|key))$/i;
+const sensitiveBasenames = /^(?:\.env(?:\.[A-Za-z0-9_-]+)?|id_(?:rsa|dsa|ecdsa|ed25519)|credentials\.json|service-account(?:\.json)?|[A-Za-z0-9_.-]+\.(?:pem|p12|pfx|key))$/i;
 const exemptBasenames = /^(?:\.env\.example|\.env\.sample|\.env\.template|.*\.pub)$/i;
 export function hasSensitiveFilename(name: string): boolean {
   return !exemptBasenames.test(name) && sensitiveBasenames.test(name);
