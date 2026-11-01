@@ -30,7 +30,7 @@ test('CLI exits zero on clean scan',()=>{
 test('CLI exits one on secret, reports no matched text',()=>{
   const root=fixture();
   const secret='ghp_'+'Q'.repeat(36);
-  try{writeFileSync(join(root,'suspicious.txt'),'\\n'+secret);
+  try{writeFileSync(join(root,'suspicious.txt'),'\n'+secret);
     const r=run([root,'--format','json']);assert.equal(r.status,1,r.stderr);
     const data=JSON.parse(r.stdout);assert.equal(data.status,'findings');
     assert.equal(data.findings[0].rule,'github-token');assert.equal(data.findings[0].line,2);
