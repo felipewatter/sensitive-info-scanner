@@ -1,0 +1,48 @@
+name: Publish Sensitive Info Scanner v1.1.0
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/release-v1.1.0.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Create verified v1.1.0 release
+    if: github.repository == 'felipewatter/sensitive-info-scanner'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout notes and complete Git history
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Verify release target and documentation
+        env:
+          RELEASE_COMMIT: f51d443b86890f443f8576ca1ca9ec4f1ad72853
+        shell: bash
+        run: |
+          set -euo pipefail
+          git merge-base --is-ancestor "$RELEASE_COMMIT" HEAD
+          test -s .github/release-notes/v1.1.0.md
+          git show "$RELEASE_COMMIT:package.json" | grep -q '"version": "1.1.0"'
+
+      - name: Publish official stable GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_COMMIT: f51d443b86890f443f8576ca1ca9ec4f1ad72853
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view v1.1.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release v1.1.0 already exists; refusing to overwrite."
+            exit 0
+          fi
+          gh release create v1.1.0 \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$RELEASE_COMMIT" \
+            --title "Sensitive Info Scanner v1.1.0 — Security Hardening & Safe Secret Detection" \
+            --notes-file .github/release-notes/v1.1.0.md \
+            --latest
